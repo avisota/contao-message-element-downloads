@@ -1,0 +1,16 @@
+{% extends 'avisota/message/renderer/default/mce_container.html.twig' %}
+{% import "avisota/message/renderer/default/mce_macros.html.twig" as mce %}
+
+{% set headline = headline|deserialize(true) %}
+{% set hl = headline.unit ? headline.unit : 'h1' %}
+{% set headline = headline.value %}
+
+{% block content %}
+	{% spaceless %}
+		<ul>
+			{% for file in files %}
+				<li><span class="file">{{ mce.icon(file.icon) }} <a href="{{ file.url }}" target="_blank">{{ file.title }}</a></span><span class="size"> ({{ file.size }})</span></li>
+			{% endfor %}
+		</ul>
+	{% endspaceless %}
+{% endblock %}

@@ -17,3 +17,13 @@
 /**
  * Fields
  */
+$GLOBALS['TL_LANG']['orm_avisota_message_content']['downloadSources'] = array(
+	'Files',
+	'Chose the download files.'
+);
+
+
+/**
+ * Legends
+ */
+$GLOBALS['TL_LANG']['orm_avisota_message_content']['downloads_legend'] = 'Downloads';

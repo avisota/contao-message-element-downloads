@@ -18,3 +18,8 @@
  * Message elements
  */
 $GLOBALS['TL_MCE']['files'][] = 'downloads';
+
+/**
+ * Events
+ */
+$GLOBALS['TL_EVENT_SUBSCRIBERS'][] = 'Avisota\Contao\Message\Element\Downloads\DefaultRenderer';
