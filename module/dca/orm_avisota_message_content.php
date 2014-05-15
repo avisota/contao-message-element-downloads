@@ -28,8 +28,14 @@ $GLOBALS['TL_DCA']['orm_avisota_message_content']['metapalettes']['downloads'] =
 
 $GLOBALS['TL_DCA']['orm_avisota_message_content']['fields']['downloadSources'] = array
 (
-	'label'       => &$GLOBALS['TL_LANG']['orm_avisota_message_content']['downloadSources'],
+	'label'     => &$GLOBALS['TL_LANG']['orm_avisota_message_content']['downloadSources'],
 	'exclude'   => true,
 	'inputType' => 'fileTree',
-	'eval'      => array('fieldType' => 'checkbox', 'files' => true, 'mandatory' => true, 'multiple' => true, 'tl_class' => 'clr')
+	'eval'      => array(
+		'fieldType' => 'checkbox',
+		'files'     => true,
+		'mandatory' => true,
+		'multiple'  => true,
+		'tl_class'  => 'clr'
+	)
 );
