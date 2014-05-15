@@ -22,7 +22,8 @@ $GLOBALS['TL_DCA']['orm_avisota_message_content']['metapalettes']['downloads'] =
 (
 	'type'      => array('type', 'cell', 'headline'),
 	'downloads' => array('downloadSources'),
-	'expert'    => array(':hide', 'cssID', 'space')
+	'expert'    => array(':hide', 'cssID', 'space'),
+	'published' => array('invisible'),
 );
 
 $GLOBALS['TL_DCA']['orm_avisota_message_content']['fields']['downloadSources'] = array
