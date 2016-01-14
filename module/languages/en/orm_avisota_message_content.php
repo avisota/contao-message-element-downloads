@@ -13,15 +13,13 @@
  * @filesource
  */
 
-
 /**
  * Fields
  */
 $GLOBALS['TL_LANG']['orm_avisota_message_content']['downloadSources'] = array(
-	'Files',
-	'Chose the download files.'
+    'Files',
+    'Chose the download files.'
 );
-
 
 /**
  * Legends
