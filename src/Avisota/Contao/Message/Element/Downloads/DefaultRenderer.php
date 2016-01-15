@@ -2,96 +2,109 @@
 
 /**
  * Avisota newsletter and mailing system
- * Copyright (C) 2013 Tristan Lins
+ * Copyright © 2016 Sven Baumann
  *
  * PHP version 5
  *
- * @copyright  bit3 UG 2013
- * @author     Tristan Lins <tristan.lins@bit3.de>
+ * @copyright  way.vision 2016
+ * @author     Sven Baumann <baumann.sv@gmail.com>
  * @package    avisota/contao-message-element-download
  * @license    LGPL-3.0+
  * @filesource
  */
 
-
 namespace Avisota\Contao\Message\Element\Downloads;
 
 use Avisota\Contao\Core\Message\Renderer;
-use Avisota\Contao\Entity\MessageContent;
 use Avisota\Contao\Message\Core\Event\AvisotaMessageEvents;
 use Avisota\Contao\Message\Core\Event\RenderMessageContentEvent;
-use Avisota\Recipient\RecipientInterface;
 use Contao\Doctrine\ORM\Entity;
 use Contao\Doctrine\ORM\EntityAccessor;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-
 /**
  * Class DefaultRenderer
  *
- * @copyright  bit3 UG 2013
- * @author     Tristan Lins <tristan.lins@bit3.de>
+ * @copyright  way.vision 2016
+ * @author     Sven Baumann <baumann.sv@gmail.com>
  * @package    avisota/contao-message-element-download
  */
 class DefaultRenderer implements EventSubscriberInterface
 {
-	/**
-	 * {@inheritdoc}
-	 */
-	static public function getSubscribedEvents()
-	{
-		return array(
-			AvisotaMessageEvents::RENDER_MESSAGE_CONTENT => 'renderContent',
-		);
-	}
+    /**
+     * Returns an array of event names this subscriber wants to listen to.
+     *
+     * The array keys are event names and the value can be:
+     *
+     *  * The method name to call (priority defaults to 0)
+     *  * An array composed of the method name to call and the priority
+     *  * An array of arrays composed of the method names to call and respective
+     *    priorities, or 0 if unset
+     *
+     * For instance:
+     *
+     *  * array('eventName' => 'methodName')
+     *  * array('eventName' => array('methodName', $priority))
+     *  * array('eventName' => array(array('methodName1', $priority), array('methodName2'))
+     *
+     * @return array The event names to listen to
+     */
+    static public function getSubscribedEvents()
+    {
+        return array(
+            AvisotaMessageEvents::RENDER_MESSAGE_CONTENT => 'renderContent',
+        );
+    }
 
-	/**
-	 * Render a single message content element.
-	 *
-	 * @param MessageContent     $content
-	 * @param RecipientInterface $recipient
-	 *
-	 * @return string
-	 */
-	public function renderContent(RenderMessageContentEvent $event)
-	{
-		$content = $event->getMessageContent();
+    /**
+     * Render a single message content element.
+     *
+     * @param RenderMessageContentEvent $event
+     *
+     * @return string
+     * @internal param MessageContent $content
+     * @internal param RecipientInterface $recipient
+     *
+     */
+    public function renderContent(RenderMessageContentEvent $event)
+    {
+        $content = $event->getMessageContent();
 
-		if ($content->getType() != 'downloads' || $event->getRenderedContent()) {
-			return;
-		}
+        if ($content->getType() != 'downloads' || $event->getRenderedContent()) {
+            return;
+        }
 
-		/** @var EntityAccessor $entityAccessor */
-		$entityAccessor = $GLOBALS['container']['doctrine.orm.entityAccessor'];
+        /** @var EntityAccessor $entityAccessor */
+        $entityAccessor = $GLOBALS['container']['doctrine.orm.entityAccessor'];
 
-		$context          = $entityAccessor->getProperties($content);
-		$context['files'] = array();
+        $context          = $entityAccessor->getProperties($content);
+        $context['files'] = array();
 
-		foreach ($context['downloadSources'] as $index => $downloadSource) {
-			$context['downloadSources'][$index] = $downloadSource = \Compat::resolveFile($downloadSource);
+        foreach ($context['downloadSources'] as $index => $downloadSource) {
+            $context['downloadSources'][$index] = $downloadSource = \Compat::resolveFile($downloadSource);
 
-			$file = new \File($downloadSource, true);
+            $file = new \File($downloadSource, true);
 
-			if (!$file->exists()) {
-				unset($context['downloadSources'][$index]);
-				continue;
-			}
+            if (!$file->exists()) {
+                unset($context['downloadSources'][$index]);
+                continue;
+            }
 
-			$context['files'][$index] = array(
-				'url'   => $downloadSource,
-				'size'  => \System::getReadableSize(filesize(TL_ROOT . DIRECTORY_SEPARATOR . $downloadSource)),
-				'icon'  => 'assets/contao/images/' . $file->icon,
-				'title' => basename($downloadSource),
-			);
-		}
+            $context['files'][$index] = array(
+                'url'   => $downloadSource,
+                'size'  => \System::getReadableSize(filesize(TL_ROOT . DIRECTORY_SEPARATOR . $downloadSource)),
+                'icon'  => 'assets/contao/images/' . $file->icon,
+                'title' => basename($downloadSource),
+            );
+        }
 
-		if (empty($context['files'])) {
-			return;
-		}
+        if (empty($context['files'])) {
+            return;
+        }
 
-		$template = new \TwigTemplate('avisota/message/renderer/default/mce_downloads', 'html');
-		$buffer   = $template->parse($context);
+        $template = new \TwigTemplate('avisota/message/renderer/default/mce_downloads', 'html');
+        $buffer   = $template->parse($context);
 
-		$event->setRenderedContent($buffer);
-	}
+        $event->setRenderedContent($buffer);
+    }
 }

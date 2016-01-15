@@ -6,14 +6,14 @@
 {% set headline = headline.value %}
 
 {% block content %}
-	{% spaceless %}
-		{% if headline %}
-			<{{ hl }}>{{ headline }}</{{ hl }}>
-		{% endif %}
-		<ul>
-			{% for file in files %}
-				<li><span class="file">{{ mce.icon(file.icon) }} <a href="{{ file.url }}" target="_blank">{{ file.title }}</a></span><span class="size"> ({{ file.size }})</span></li>
-			{% endfor %}
-		</ul>
-	{% endspaceless %}
+    {% spaceless %}
+        {% if headline %}
+            <{{ hl }}>{{ headline }}</{{ hl }}>
+        {% endif %}
+        <ul>
+            {% for file in files %}
+                <li><span class="file">{{ mce.icon(file.icon) }} <a href="{{ file.url }}" target="_blank">{{ file.title }}</a></span><span class="size"> ({{ file.size }})</span></li>
+            {% endfor %}
+        </ul>
+    {% endspaceless %}
 {% endblock %}
