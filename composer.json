@@ -50,12 +50,6 @@
         "contao": {
             "sources": {
                 "contao": "system/modules/avisota-message-element-downloads"
-            },
-            "transifex": {
-                "project": "avisota-contao",
-                "prefix": "contao-message-element-downloads-",
-                "languages_cto": "contao/languages",
-                "languages_tx": ".tx"
             }
         },
         "branch-alias": {
