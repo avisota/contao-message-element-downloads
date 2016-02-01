@@ -3,6 +3,7 @@
     <body>
       <trans-unit id="orm_avisota_message_content.downloadSources.0">
         <source>Files</source>
+        <target>Arquivos</target>
         
       </trans-unit>
       <trans-unit id="orm_avisota_message_content.downloadSources.1">
@@ -11,6 +12,7 @@
       </trans-unit>
       <trans-unit id="orm_avisota_message_content.downloads_legend">
         <source>Downloads</source>
+        <target>Downloads</target>
         
       </trans-unit>
     </body>
