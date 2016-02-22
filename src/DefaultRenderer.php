@@ -62,12 +62,11 @@ class DefaultRenderer implements EventSubscriberInterface
      * @param RenderMessageContentEvent $event
      *
      * @return string
-     * @internal param MessageContent $content
-     * @internal param RecipientInterface $recipient
-     *
      */
     public function renderContent(RenderMessageContentEvent $event)
     {
+        global $container;
+
         $content = $event->getMessageContent();
 
         if ($content->getType() != 'downloads' || $event->getRenderedContent()) {
@@ -75,7 +74,7 @@ class DefaultRenderer implements EventSubscriberInterface
         }
 
         /** @var EntityAccessor $entityAccessor */
-        $entityAccessor = $GLOBALS['container']['doctrine.orm.entityAccessor'];
+        $entityAccessor = $container['doctrine.orm.entityAccessor'];
 
         $context          = $entityAccessor->getProperties($content);
         $context['files'] = array();

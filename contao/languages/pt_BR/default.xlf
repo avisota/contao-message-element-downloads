@@ -3,10 +3,12 @@
     <body>
       <trans-unit id="MCE.downloads.0">
         <source>Downloads</source>
+        <target>Downloads</target>
         
       </trans-unit>
       <trans-unit id="MCE.downloads.1">
         <source>Generates multiple links to download files.</source>
+        <target>Gera vários links para download de arquivos.</target>
         
       </trans-unit>
     </body>
