@@ -85,7 +85,7 @@ class DefaultRenderer implements EventSubscriberInterface
         foreach ($context['downloadSources'] as $index => $downloadSource) {
             $context['downloadSources'][$index] = FilesModel::findByUuid($downloadSource)->path;
 
-            $file = new File($downloadSource, true);
+            $file = new File($context['downloadSources'][$index], true);
 
             if (!$file->exists()) {
                 unset($context['downloadSources'][$index]);
@@ -94,9 +94,9 @@ class DefaultRenderer implements EventSubscriberInterface
 
             $context['files'][$index] = array(
                 'url'   => $downloadSource,
-                'size'  => System::getReadableSize(filesize(TL_ROOT . DIRECTORY_SEPARATOR . $downloadSource)),
+                'size'  => System::getReadableSize($file->size),
                 'icon'  => 'assets/contao/images/' . $file->icon,
-                'title' => basename($downloadSource),
+                'title' => $file->path
             );
         }
 
