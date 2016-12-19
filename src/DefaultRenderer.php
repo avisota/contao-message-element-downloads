@@ -18,6 +18,7 @@ namespace Avisota\Contao\Message\Element\Downloads;
 use Avisota\Contao\Message\Core\Event\AvisotaMessageEvents;
 use Avisota\Contao\Message\Core\Event\RenderMessageContentEvent;
 use Contao\Doctrine\ORM\EntityAccessor;
+use Contao\FilesModel;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -80,7 +81,7 @@ class DefaultRenderer implements EventSubscriberInterface
         $context['files'] = array();
 
         foreach ($context['downloadSources'] as $index => $downloadSource) {
-            $context['downloadSources'][$index] = $downloadSource = \Compat::resolveFile($downloadSource);
+            $context['downloadSources'][$index] = FilesModel::findByUuid($downloadSource)->path;
 
             $file = new \File($downloadSource, true);
 
