@@ -82,6 +82,7 @@ class DefaultRenderer implements EventSubscriberInterface
         $context          = $entityAccessor->getProperties($content);
         $context['files'] = array();
 
+        System::loadLanguageFile('default');
         foreach ($context['downloadSources'] as $index => $downloadSource) {
             $context['downloadSources'][$index] = FilesModel::findByUuid($downloadSource)->path;
 
@@ -92,8 +93,9 @@ class DefaultRenderer implements EventSubscriberInterface
                 continue;
             }
 
+
             $context['files'][$index] = array(
-                'url'   => $downloadSource,
+                'url'   => $file->path,
                 'size'  => System::getReadableSize($file->size),
                 'icon'  => 'assets/contao/images/' . $file->icon,
                 'title' => $file->path
